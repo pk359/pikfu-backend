@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
 import { listenForApis } from "./api"
-import {corsOptions, DatabaseService } from './utils'
+import {corsOptions, DatabaseService, environments } from './utils'
 
 
 // The Express app is exported so that it can be used by serverless Functions.
@@ -36,7 +36,7 @@ export function app ()
 
 function run ()
 {
-  const port = process.env.APP_PORT || 4001;
+  const port = environments.PORT || 4001;
   DatabaseService.initialize();
   // Start up the Node server
   const server = app();
