@@ -1,11 +1,6 @@
+import { JwtPayload } from "jsonwebtoken";
 import { IApiRequest, IApiResponse } from "../models";
-import jwtLibrary, { JwtPayload } from "jsonwebtoken";
-import { ApiResponder, environments } from "../utils";
-import { promisify } from "util";
-
-export const jwtVerifierAsync = promisify(jwtLibrary.verify as (token: string, secretOrPublicKey: string) => JwtPayload | string);
-export const jwtSignerAsync = promisify(jwtLibrary.sign);
-
+import { ApiResponder, environments, jwtVerifierAsync } from "../utils";
 export const accessCheck = async (
     request: IApiRequest,
     response: IApiResponse,
