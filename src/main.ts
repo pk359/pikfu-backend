@@ -3,7 +3,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
-import { listenForApis } from "./api"
+import { listenForApis } from "./utils/route-listeners"
 import {corsOptions, DatabaseService, environments } from './utils'
 
 

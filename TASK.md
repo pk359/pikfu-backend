@@ -2,8 +2,8 @@ Live Answers
 The goal is to make a small full-stack application that shows a question and allows the user to submit answers for that question, using React for the frontend, and NodeJS, or Ruby On Rails for the backend, with any database engine. You should not work for more than 4-5 hours on this task.
 
 Create two repositories on either GitHub or Gitlab, one for the front end and one for the backend. Send the links to both repositories.
-Requirements
 
+Requirements
 User must be able to submit an answer to the question "Is a hot dog a sandwich? Why?" and get back a success message.
 
 User must be able to submit multiple answers one after the other without reloading the page
