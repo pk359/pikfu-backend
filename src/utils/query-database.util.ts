@@ -20,7 +20,7 @@ export class DatabaseService {
     });
   }
 
-  static async query(sql: string): Promise<QueryResult<any>> {
+  static async query(sql: string): Promise<Array<any>> {
     console.log("--query called--", sql);
     const client = await DatabaseService.pool.connect();
     let dbRes: QueryResult<any>;
@@ -30,6 +30,6 @@ export class DatabaseService {
     } finally {
       client.release();
     }
-    return dbRes;
+    return dbRes.rows || [];
   }
 }

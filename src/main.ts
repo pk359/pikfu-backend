@@ -46,6 +46,5 @@ function run ()
   } );
 }
 
-run();
-
+run()
 

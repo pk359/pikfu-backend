@@ -1,16 +1,20 @@
 import { IApiRequest, IApiResponse } from "../models";
-export type TApiStatus = 'SUCCESS' | 'INTERNAL_SERVER_ERROR' | 'UNAUTHORIZED';
-type IStatusCodeMap = {
-  [key in TApiStatus]: number
+export type TErrorCodes = 'USER_EXISTS' | 'INVALID_CREDENTIALS' | 'INSUFFICIENT_PARAMETERS'
+export type TErrorMessages = {
+  [key in TErrorCodes]: string;
+}
+interface IApiResult {
+  error?: {code: TErrorCodes, message?: string} | null;
+  data?: any;
 }
 export class ApiResponder {
   private _hasError = false;
   private request: IApiRequest;
   private response: IApiResponse;
-  readonly statusCodeMap: IStatusCodeMap = {
-    INTERNAL_SERVER_ERROR: 500,
-    SUCCESS: 200,
-    UNAUTHORIZED: 401
+  readonly errorMessages: TErrorMessages = {
+    INSUFFICIENT_PARAMETERS: 'Request body lacks required parameters.', 
+    INVALID_CREDENTIALS: 'You are not authorized to access this content', 
+    USER_EXISTS: 'User already exist'
   }
   constructor(request: IApiRequest, response: IApiResponse) {
     this.request = request;
@@ -26,11 +30,12 @@ export class ApiResponder {
   }
 
   sendApiRes = (
-    status: TApiStatus,
-    result?: any
+    result?: IApiResult
   ) => {
-    const statusCode = this.statusCodeMap[status];
-    this._hasError = statusCode !== 200;
-    this.response.status(statusCode).json(result).end();
+    this.hasError = !!result?.error;
+    if (result?.error?.code) {
+      result.error.message = this.errorMessages[result.error.code]
+    }
+    this.response.status(200).json(result || null).end();
   };
 }

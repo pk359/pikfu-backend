@@ -8,9 +8,9 @@ export const accessCheck = async (
 ) => {
 
     const apiResponder = new ApiResponder(request, response);
-    const accessToken = request.headers.ACCESS_TOKEN;
+    const accessToken = request.headers.JWT_TOKEN;
     if (!accessToken) {
-        apiResponder.sendApiRes('UNAUTHORIZED');
+        apiResponder.sendApiRes({ error: { code: 'INVALID_CREDENTIALS' } });
         return;
     }
     try {
@@ -22,6 +22,6 @@ export const accessCheck = async (
         next({ userId });
 
     } catch (error) {
-        apiResponder.sendApiRes('UNAUTHORIZED');
+        apiResponder.sendApiRes({ error: { code: 'INVALID_CREDENTIALS' } });
     }
 };
