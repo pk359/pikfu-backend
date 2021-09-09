@@ -1,5 +1,4 @@
 import WebSocket, { Server as WebSocketServer } from 'ws';
-import { server } from '../main';
 import { IWebSocketActions } from '../models';
 
 

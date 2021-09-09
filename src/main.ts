@@ -7,7 +7,7 @@ import { listenForApis } from "./utils/route-listeners"
 import {corsOptions, DatabaseService, environments } from './utils'
 import { WebSocketManager } from "./utils/web-sockets.util";
 
-export let server;
+
 
 // The Express app is exported so that it can be used by serverless Functions.
 const app = () => 
@@ -41,7 +41,7 @@ function run ()
   const port = environments.PORT || 4001;
   DatabaseService.initialize();
   // Start up the Node server
-  server = app();
+  const server = app();
   const listener = server.listen( port, () =>
   {
 
