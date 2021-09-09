@@ -10,7 +10,7 @@ export const accessCheck = async (
     const apiResponder = new ApiResponder(request, response);
     const accessToken = request.headers.JWT_TOKEN;
     if (!accessToken) {
-        apiResponder.sendApiRes({ error: { code: 'INVALID_CREDENTIALS' } });
+        apiResponder.sendApiRes({ error: { code: 'TOKEN_EXPIRED' } });
         return;
     }
     try {
@@ -22,6 +22,6 @@ export const accessCheck = async (
         next({ userId });
 
     } catch (error) {
-        apiResponder.sendApiRes({ error: { code: 'INVALID_CREDENTIALS' } });
+        apiResponder.sendApiRes({ error: { code: 'TOKEN_EXPIRED' } });
     }
 };

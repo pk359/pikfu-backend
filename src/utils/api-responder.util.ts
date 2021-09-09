@@ -1,5 +1,5 @@
 import { IApiRequest, IApiResponse } from "../models";
-export type TErrorCodes = 'USER_EXISTS' | 'INVALID_CREDENTIALS' | 'INSUFFICIENT_PARAMETERS'
+export type TErrorCodes = 'TOKEN_EXPIRED' | 'USER_EXISTS' | 'INVALID_CREDENTIALS' | 'INSUFFICIENT_PARAMETERS'
 export type TErrorMessages = {
   [key in TErrorCodes]: string;
 }
@@ -11,10 +11,11 @@ export class ApiResponder {
   private _hasError = false;
   private request: IApiRequest;
   private response: IApiResponse;
-  readonly errorMessages: TErrorMessages = {
+  private readonly errorMessages: TErrorMessages = {
     INSUFFICIENT_PARAMETERS: 'Request body lacks required parameters.', 
     INVALID_CREDENTIALS: 'You are not authorized to access this content', 
-    USER_EXISTS: 'User already exist'
+    USER_EXISTS: 'User already exist', 
+    TOKEN_EXPIRED: 'Session is expired'
   }
   constructor(request: IApiRequest, response: IApiResponse) {
     this.request = request;

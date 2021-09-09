@@ -26,7 +26,8 @@ export const loginUserApi = async (request: IApiRequest, response: IApiResponse)
         apiResponder.sendApiRes({error: {code: 'INVALID_CREDENTIALS'}})
         return;
     }
-    const payload = { userId: user[0].id };
+    // 1 year of expiry
+    const payload = { userId: user[0].id, exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365)};
     const jwtToken = await jwtSignerAsync(payload, environments.JWT_SECRET)
     apiResponder.sendApiRes({data: {jwtToken}});
 }

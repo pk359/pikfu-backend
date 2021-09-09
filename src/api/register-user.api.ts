@@ -14,7 +14,8 @@ export const registerUserApi = async (request: IApiRequest, response: IApiRespon
         return;
     }
     const id = dbRes[0].id;
-    const payload = { userId: id };
+    // expire token in 1 year
+    const payload = { userId: id, exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 365) };
     const jwtToken = await jwtSignerAsync(payload, environments.JWT_SECRET);
     apiResponder.sendApiRes({data: {jwtToken}});
 }
