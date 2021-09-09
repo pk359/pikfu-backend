@@ -1,5 +1,7 @@
 import { IApiRequest, IApiResponse } from "../models";
-export type TErrorCodes = 'TOKEN_EXPIRED' | 'USER_EXISTS' | 'INVALID_CREDENTIALS' | 'INSUFFICIENT_PARAMETERS'
+export type TErrorCodes = 'TOKEN_EXPIRED' | 'USER_EXISTS' 
+| 'INVALID_CREDENTIALS' | 'INSUFFICIENT_PARAMETERS' | 'FORBIDDEN_VALUE_IN_ANSWER' 
+| 'COULD_NOT_POST_ANSWER'
 export type TErrorMessages = {
   [key in TErrorCodes]: string;
 }
@@ -15,7 +17,9 @@ export class ApiResponder {
     INSUFFICIENT_PARAMETERS: 'Request body lacks required parameters.', 
     INVALID_CREDENTIALS: 'You are not authorized to access this content', 
     USER_EXISTS: 'User already exist', 
-    TOKEN_EXPIRED: 'Session is expired'
+    TOKEN_EXPIRED: 'Session is expired', 
+    FORBIDDEN_VALUE_IN_ANSWER: 'Answer contains forbidden values', 
+    COULD_NOT_POST_ANSWER: 'Your answer could not be posted due to technical problem'
   }
   constructor(request: IApiRequest, response: IApiResponse) {
     this.request = request;
@@ -34,7 +38,7 @@ export class ApiResponder {
     result?: IApiResult
   ) => {
     this.hasError = !!result?.error;
-    if (result?.error?.code) {
+    if (result?.error?.code && !result?.error?.message) {
       result.error.message = this.errorMessages[result.error.code]
     }
     this.response.status(200).json(result || null).end();
