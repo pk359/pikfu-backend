@@ -1,42 +1,38 @@
 import WebSocket, { Server as WebSocketServer } from 'ws';
+import { server } from '../main';
+import { IWebSocketActions } from '../models';
 
 
+export class WebSocketManager {
+    static wss; 
+    static init(server: any) {
+        WebSocketManager.wss = new WebSocketServer({server});
+        WebSocketManager.wss.on('connection', ws => {
+            ws['isAlive'] = true;
+            ws.on('pong', () => { ws['alive'] = true });
+        })
 
-function noop() { }
 
-function heartbeat() {
-    this.isAlive = true;
-}
+        const interval = setInterval(function ping() {
+            WebSocketManager.wss.clients.forEach((ws) => {
+                if (ws['isAlive'] === false) { return ws.terminate(); }
 
-export const startWebSocketServer = ({ port }: { port: number }) => {
-    const wss = new WebSocketServer({
-        port
-    });
-
-    wss.on('connection', (ws) => {
-        ws['isAlive'] = true;
-        ws.on('pong', heartbeat);
-
-        ws.on('message', (data, isBinary) => {
-            wss.clients.forEach((client) => {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(data, { binary: isBinary });
-                }
+                ws['isAlive'] = false;
+                ws.ping(() => { });
             });
+        }, 30000);
+
+        WebSocketManager.wss.on('close', function close() {
+            clearInterval(interval);
         });
-    });
 
-    const interval = setInterval(function ping() {
-        wss.clients.forEach(function each(ws) {
-            if (ws['isAlive'] === false) {return ws.terminate();}
+    }
 
-            ws['isAlive'] = false;
-            ws.ping(noop);
+    static sendMessage(data: { action: IWebSocketActions; payload: any }) {
+        WebSocketManager.wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(data || {}));
+            }
         });
-    }, 30000);
-
-    wss.on('close', function close() {
-        clearInterval(interval);
-    });
-
+    }
 }

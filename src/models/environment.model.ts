@@ -6,4 +6,5 @@ export interface IServerEnvironment {
     DB_PASS: string;
     DB_DATABASE: string;
     JWT_SECRET: string;
+    WSS_PORT: number;
 }

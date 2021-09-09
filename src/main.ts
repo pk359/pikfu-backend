@@ -5,10 +5,12 @@ import express from "express";
 import cors from "cors";
 import { listenForApis } from "./utils/route-listeners"
 import {corsOptions, DatabaseService, environments } from './utils'
+import { WebSocketManager } from "./utils/web-sockets.util";
 
+export let server;
 
 // The Express app is exported so that it can be used by serverless Functions.
-export function app ()
+const app = () => 
 {
   const server = express();
   server.use( cors( corsOptions ) );
@@ -39,11 +41,13 @@ function run ()
   const port = environments.PORT || 4001;
   DatabaseService.initialize();
   // Start up the Node server
-  const server = app();
-  server.listen( port, () =>
+  server = app();
+  const listener = server.listen( port, () =>
   {
+
     console.log( `Node Express server listening on http://localhost:${ port }` );
   } );
+  WebSocketManager.init(listener);
 }
 
 run()
