@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/server/main.js", 
     "build:server": "tsc --build tsconfig.server.json",
     "watch:source": "npm run build:server -- --watch --verbose",
-    "debug:server": "npm install && nodemon --verbose --inspect=0.0.0.0:4002 dist/server/main.js",
-    "deploy:prod": "pm2 deploy pm2.config.js main-server"
+    "debug:server": "npm install && nodemon --verbose --inspect=0.0.0.0:4002 dist/server/main.js"
   },
   "license": "Closed",
   "dependencies": {
