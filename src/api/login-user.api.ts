@@ -21,7 +21,7 @@ export const loginUserApi = async (request: IApiRequest, response: IApiResponse)
         apiResponder.sendApiRes({error: {code: 'INVALID_CREDENTIALS'}})
         return;
     }
-    const isMatch = comparePassword({ hash: user[0].encrypted_password, password })
+    const isMatch = await comparePassword({ hash: user[0].encrypted_password, password })
     if (!isMatch) {
         apiResponder.sendApiRes({error: {code: 'INVALID_CREDENTIALS'}})
         return;
