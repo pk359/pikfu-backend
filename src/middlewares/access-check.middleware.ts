@@ -4,11 +4,11 @@ import { ApiResponder, environments, jwtVerifierAsync } from "../utils";
 export const accessCheck = async (
     request: IApiRequest,
     response: IApiResponse,
-    next: ({ userId: string }) => void
+    next: () => void
 ) => {
 
     const apiResponder = new ApiResponder(request, response);
-    const accessToken = request.headers.JWT_TOKEN;
+    const accessToken = request.headers.jwt_token;
     if (!accessToken) {
         apiResponder.sendApiRes({ error: { code: 'TOKEN_EXPIRED' } });
         return;
@@ -19,7 +19,8 @@ export const accessCheck = async (
             environments.JWT_SECRET
         ) as JwtPayload;
 
-        next({ userId });
+        request['userId'] = userId;
+        next();
 
     } catch (error) {
         apiResponder.sendApiRes({ error: { code: 'TOKEN_EXPIRED' } });

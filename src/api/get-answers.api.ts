@@ -4,7 +4,7 @@ export const getAnswersApi = async (request: IApiRequest, response: IApiResponse
     const apiResponder = new ApiResponder(request, response);
     
     const questionId = request.query.questionId
-    if (!!questionId) {
+    if (!!!questionId) {
         apiResponder.sendApiRes({error: {code: 'INSUFFICIENT_PARAMETERS'}})
         return;
     }

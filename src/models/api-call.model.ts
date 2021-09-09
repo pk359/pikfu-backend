@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 export type IRequestHeaders = {
-    'JWT_TOKEN': string;
+    'jwt_token': string;
 }
 export interface IApiRequest extends Request {
     headers: IRequestHeaders
