@@ -1,0 +1,1 @@
+{"version":3,"file":"submit-question.api.js","sourceRoot":"","sources":["../../../src/api/submit-question.api.ts"],"names":[],"mappings":";;;;;;;;;;;;AACA,oCAAwC;AACjC,MAAM,iBAAiB,GAAG,CAAO,OAAoB,EAAE,QAAsB,EAAE,EAAE;IACpF,MAAM,YAAY,GAAG,IAAI,oBAAY,CAAC,OAAO,EAAE,QAAQ,CAAC,CAAC;IACzD,MAAM,SAAS,GAAG,OAAO,CAAC,OAAO,CAAC,SAAS,CAAC;AAChD,CAAC,CAAA,CAAA;AAHY,QAAA,iBAAiB,qBAG7B"}
