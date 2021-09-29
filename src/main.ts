@@ -38,7 +38,7 @@ const app = () =>
 
 function run ()
 {
-  const port = environments.PORT || 4001;
+  const port = environments.PORT || 2001;
   DatabaseService.initialize();
   // Start up the Node server
   const server = app();

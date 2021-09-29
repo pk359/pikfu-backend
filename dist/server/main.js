@@ -31,7 +31,7 @@ const app = () => {
     return server;
 };
 function run() {
-    const port = utils_1.environments.PORT || 4001;
+    const port = utils_1.environments.PORT || 2001;
     utils_1.DatabaseService.initialize();
     // Start up the Node server
     const server = app();
